@@ -3,7 +3,7 @@ steps:
     commands:
       - "npm run stats"
       - "ls"
-      - "meta-data set 'bundle-stats' < stats.json"
+      - "./set_metadata"
     plugins:
       - docker-compose#v3.0.3:
           run: app

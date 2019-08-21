@@ -1,0 +1,4 @@
+#!/bin/bash
+set -e
+
+buildkite-agent meta-data set 'bundle-stats' < stats.json
