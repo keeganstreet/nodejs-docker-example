@@ -4,7 +4,8 @@
   "repository": "https://github.com/buildkite/nodejs-docker-example",
   "license": "MIT",
   "scripts": {
-    "test": "mocha ./test.js"
+    "test": "mocha ./test.js",
+    "stats": "node ./stats.js"
   },
   "devDependencies": {
     "mocha": "6.2.0"
