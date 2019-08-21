@@ -1,12 +1,9 @@
 steps:
-  - name: ":node:"
-    command: npm test
+  - name: ":node: Create bundle size stats"
+    command: npm run stats
     plugins:
       - docker-compose#v3.0.3:
           run: app
-
-  - name: "Create bundle size stats"
-    command: npm run stats
 
   - name: "list"
     command: ls
