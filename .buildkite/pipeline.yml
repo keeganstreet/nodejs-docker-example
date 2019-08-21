@@ -1,12 +1,9 @@
 steps:
   - name: ":node: Create bundle size stats"
-    command: npm run stats
+    commands:
+      - "npm run stats"
+      - "ls"
+      - "buildkite-agent meta-data set 'bundle-stats' < stats.json"
     plugins:
       - docker-compose#v3.0.3:
           run: app
-
-  - name: "list"
-    command: ls
-
-  - name: "Save stats to buildkite"
-    command: "buildkite-agent meta-data set 'bundle-stats' < stats.json"
