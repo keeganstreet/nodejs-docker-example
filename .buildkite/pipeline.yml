@@ -8,5 +8,8 @@ steps:
   - name: "Create bundle size stats"
     command: npm run stats
 
+  - name: "list"
+    command: ls
+
   - name: "Save stats to buildkite"
     command: "buildkite-agent meta-data set 'bundle-stats' < stats.json"
