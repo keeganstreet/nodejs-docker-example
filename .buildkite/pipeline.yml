@@ -1,9 +1,22 @@
 steps:
-  - name: ":node: Create bundle size stats"
+  - name: ":node: Create bundle"
     commands:
-      - "npm run stats"
-      - "ls"
-      - "./set_metadata"
-    plugins:
-      - docker-compose#v3.0.3:
-          run: app
+      - "npm install"
+      - "mkdir -p public"
+      - "npm run build"
+    artifact_paths: "public/*"
+    # plugins:
+    #   - docker-compose#v3.0.3:
+    #       run: app
+    #       volumes:
+    #         - "./public:/app/public"
+
+  - name: "save metadata"
+    commands:
+      - "buildkite-agent artifact download public/stats.json ."
+      - "ls public"
+      - "buildkite-agent meta-data set 'bundle-stats' < public/stats.json"
+
+  - name: "report change"
+    commands:
+      - "./report_change"

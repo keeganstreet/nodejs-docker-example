@@ -1,0 +1,14 @@
+#!/bin/bash
+set +e
+
+export TOKEN="68d078ecd29d20f4a50c13f53c83a65ab12cc480"
+
+curl https://graphql.buildkite.com/v1 \
+  -H "Authorization: Bearer $TOKEN" \
+  -d '{
+    "query": "{ viewer { user { name } } }",
+    "variables": "{ }"
+  }'
+
+
+buildkite-agent annotate "Bundle size change: +23KB"

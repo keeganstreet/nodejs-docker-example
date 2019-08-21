@@ -4,7 +4,7 @@
   "repository": "https://github.com/buildkite/nodejs-docker-example",
   "license": "MIT",
   "scripts": {
-    "stats": "node ./stats.js"
+    "build": "node ./build.js"
   },
   "devDependencies": {}
 }

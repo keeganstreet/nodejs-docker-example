@@ -6,7 +6,7 @@ const stats = {
   'vendor.js': Math.floor(Math.random() * 1000)
 };
 
-fs.writeFile('./stats.json', JSON.stringify(stats), 'utf8', err => {
+fs.writeFile('./public/stats.json', JSON.stringify(stats), 'utf8', err => {
   if (err) throw err;
   console.log('The file has been saved!');
 });
