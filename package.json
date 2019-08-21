@@ -4,7 +4,11 @@
   "repository": "https://github.com/buildkite/nodejs-docker-example",
   "license": "MIT",
   "scripts": {
-    "build": "node ./build.js"
+    "build": "node ./scripts/build.js"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "dependencies": {
+    "directory-tree": "^2.2.4",
+    "isomorphic-fetch": "^2.2.1"
+  }
 }
