@@ -3,7 +3,7 @@ steps:
     commands:
       - "npm run stats"
       - "ls"
-      - "buildkite-agent meta-data set 'bundle-stats' < stats.json"
+      - "meta-data set 'bundle-stats' < stats.json"
     plugins:
       - docker-compose#v3.0.3:
           run: app
