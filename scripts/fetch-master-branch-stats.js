@@ -35,15 +35,15 @@ module.exports.default = () => fetch('https://graphql.buildkite.com/v1',
     })
   })
   .then(response => {
-      if (response.status >= 400) {
-          throw new Error('Bad response from server');
-      }
-      return response.json();
+    if (response.status >= 400) {
+      throw new Error('Bad response from server');
+    }
+    return response.json();
   })
   .then(json => {
-      try {
-        return JSON.parse(json.data.pipeline.builds.edges[0].node.metaData.edges.find(edge => edge.node.key === 'bundle-stats').node.value);
-      } catch(e) {
-        console.log('Could not retrieve metadata for master branch bundle size');
-      }
-    });
+    try {
+      return JSON.parse(json.data.pipeline.builds.edges[0].node.metaData.edges.find(edge => edge.node.key === 'bundle-stats').node.value);
+    } catch(e) {
+      console.log('Could not retrieve metadata for master branch bundle size');
+    }
+  });

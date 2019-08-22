@@ -1,6 +1,7 @@
 const fs = require('fs');
 const fetchMasterBranchStats = require('./fetch-master-branch-stats.js').default;
 const mergeStats = require('./merge-stats.js').default;
+const commentOnPR = require('./comment-on-pr.js').default;
 
 const statsThisBranch = JSON.parse(fs.readFileSync('./public/stats.json', 'utf8'));
 
@@ -22,4 +23,8 @@ File | Master branch | This branch | Difference
 
       annotation += `**Total** | **${totalStats.masterBranch.toLocaleString()}** | **${totalStats.thisBranch.toLocaleString()}** | **${totalStats.difference.toLocaleString()} (${totalStats.differencePercentage}%)**` + '\n';
       console.log(annotation);
+
+      if (process.env.BUILDKITE_PULL_REQUEST !== 'false') {
+        commentOnPR(mergedStats, annotation);
+      }
     });
