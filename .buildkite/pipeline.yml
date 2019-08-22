@@ -9,10 +9,10 @@ steps:
   - name: "save metadata"
     commands:
       - "buildkite-agent artifact download public/stats.json ."
-      - "ls public"
       - "buildkite-agent meta-data set 'bundle-stats' < public/stats.json"
 
   - name: "report change"
     commands:
+      - "buildkite-agent artifact download public/stats.json ."
       - "npm install"
       - "./scripts/report_change"

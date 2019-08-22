@@ -3,6 +3,4 @@ set +e
 
 export TOKEN="68d078ecd29d20f4a50c13f53c83a65ab12cc480"
 
-node ./scripts/report-change.js
-
-buildkite-agent annotate "Bundle size change: +23KB"
+node ./scripts/report-change.js | buildkite-agent annotate --style 'info'

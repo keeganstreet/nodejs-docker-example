@@ -1,45 +1,25 @@
-require('isomorphic-fetch');
+const fs = require('fs');
+const fetchMasterBranchStats = require('./fetch-master-branch-stats.js').default;
+const mergeStats = require('./merge-stats.js').default;
 
-const query = `{
-  pipeline(slug: "keegan-street/keegan-buildkite-play") {
-    builds(branch: "master", state: PASSED, first: 1) {
-      edges {
-        node {
-          commit
-          message
-          url
-          metaData {
-            edges {
-              node {
-                key
-                value
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}`;
+const statsThisBranch = JSON.parse(fs.readFileSync('./public/stats.json', 'utf8'));
 
-fetch('https://graphql.buildkite.com/v1',
-  {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${process.env.TOKEN}`
-    },
-    body: JSON.stringify({
-      query,
-      variables: {}
-    })
-  })
-  .then(response => {
-      if (response.status >= 400) {
-          throw new Error('Bad response from server');
+fetchMasterBranchStats()
+  .then(statsMasterBranch => {
+      const { mergedStats, totalStats } = mergeStats({ statsThisBranch, statsMasterBranch });
+
+      let annotation = `
+**Artefact filesize changes in this build**
+
+File | Master branch | This branch | Difference
+---- | ------------- | ----------- | ----------
+`;
+
+      for (const key in mergedStats) {
+        const item = mergedStats[key];
+        annotation += `\`${key}\` | ${item.masterBranch.toLocaleString()} | ${item.thisBranch.toLocaleString()} | ${item.difference.toLocaleString()} (${item.differencePercentage}%)` + '\n';
       }
-      return response.json();
-  })
-  .then(json => {
-      console.log(JSON.stringify(json));
-  });
+
+      annotation += `**Total** | **${totalStats.masterBranch.toLocaleString()}** | **${totalStats.thisBranch.toLocaleString()}** | **${totalStats.difference.toLocaleString()} (${totalStats.differencePercentage}%)**` + '\n';
+      console.log(annotation);
+    });
