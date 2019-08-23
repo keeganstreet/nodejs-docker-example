@@ -9,8 +9,7 @@ fetchMasterBranchStats()
   .then(statsMasterBranch => {
       const { mergedStats, totalStats } = mergeStats({ statsThisBranch, statsMasterBranch });
 
-      let annotation = `
-**Artefact filesize changes in this build**
+      let annotation = `**Artefact filesize changes in this build**
 
 File | Master branch | This branch | Difference
 ---- | ------------- | ----------- | ----------
@@ -25,6 +24,6 @@ File | Master branch | This branch | Difference
       console.log(annotation);
 
       if (process.env.BUILDKITE_PULL_REQUEST !== 'false') {
-        commentOnPR(mergedStats, annotation);
+        commentOnPR(annotation);
       }
     });
