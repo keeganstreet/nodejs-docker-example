@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+
+BASE_IMAGE="keegan/docker:1.1"
+CONTAINER_NAME=$(date +%s)
+WORKDIR=/app
+
+docker build -f Dockerfile -t $BASE_IMAGE .
+
+docker run \
+  --name ${CONTAINER_NAME} ${BASE_IMAGE} /bin/bash \
+  -c 'npm run stats'
+
+docker cp ${CONTAINER_NAME}:${WORKDIR}/public/stats.json public/
+
+cat public/stats.json
