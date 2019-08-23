@@ -36,7 +36,7 @@ module.exports.default = () => fetch('https://graphql.buildkite.com/v1',
   })
   .then(response => {
     if (response.status >= 400) {
-      throw new Error('Bad response from server');
+      throw Error(response.statusText);
     }
     return response.json();
   })

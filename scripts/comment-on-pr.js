@@ -10,7 +10,7 @@ const callGitHub = body =>
     body: JSON.stringify(body)
   }).then(response => {
     if (response.status >= 400) {
-      return response.text();
+      throw Error(response.statusText);
     }
     return response.json();
   });
